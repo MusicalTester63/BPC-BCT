@@ -7,10 +7,9 @@ from paket import paket
 import pickle
 
 run = True
-#dir = '/home/xhamra02/Desktop/'
 dir = ''
 suffix = '.cap'
-
+templates = {}
 
 
 print("Vitajte v programe PaketBuilder v1, ktorý používa Scapy")
@@ -64,10 +63,10 @@ while run:
 
 
     elif(control == "2"):
-        print("cic")
+        templates[p.get_meno()] = p
 
     elif(control == "3"):
-        print("cic")
+        print(templates)
 
     elif(control == "4"):
         print("meno: " + p.get_meno())
