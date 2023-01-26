@@ -84,6 +84,8 @@ while run:
                 print("typ:", templates[x].get_typ()[0])
                 print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
                 print("Zoznam segmentov:", templates[x].get_segmentList())
+                print("\n")
+
             input("\nPress enter to continue...")
 
     elif(control == "5"):
