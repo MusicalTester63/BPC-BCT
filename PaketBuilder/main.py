@@ -21,7 +21,8 @@ while run:
     print("5. Exportovať paket do PCAP súboru")
     print("0. Exit")
 
-    control = input("")
+    control = input("Volba: ")
+    print(control)
 
     if(control == 1):
 
