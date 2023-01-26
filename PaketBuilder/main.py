@@ -25,8 +25,6 @@ while run:
     print("-------------------------------------")
 
     control = input("Volba: ")
-    print(control)
-
 
     if(control == "1"):
 
