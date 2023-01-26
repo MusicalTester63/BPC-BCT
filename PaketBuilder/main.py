@@ -37,13 +37,14 @@ while run:
             iterator -= 1
 
         meno = input("Zadajte meno paketu/paketom: ")
-        p = paket(meno, od, pr, typ, sl, segList)
 
         typ = []
         pktAmount = int(input("Kolko takýchto paketov si prajete vytvoriť?: "))
         while pktAmount > 0:
             typ.append(4)
             pktAmount -= 1
+
+        p = paket(meno, od, pr, typ, sl, segList)
 
         print("meno: " + p.get_meno())
         print("Odosielatel: " + p.get_od())
