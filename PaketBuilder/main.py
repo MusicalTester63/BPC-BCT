@@ -1,7 +1,7 @@
 from scapy.all import *
 from scapy.layers.inet6 import IPv6ExtHdrRouting, IPv6
 
-import paket
+from paket import paket
 import pickle
 
 run = True
