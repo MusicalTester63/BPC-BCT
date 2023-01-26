@@ -66,7 +66,15 @@ while run:
         templates[p.get_meno()] = p
 
     elif(control == "3"):
-        print(templates)
+
+        for x in templates:
+            print("meno: " + p.get_meno())
+            print("Odosielatel: " + p.get_od())
+            print("Príjemca: " + p.get_pr())
+            print("typ:", p.get_typ()[0])
+            print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
+            print("Zoznam segmentov:", p.get_segmentList())
+
 
     elif(control == "4"):
         print("meno: " + p.get_meno())
