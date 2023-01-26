@@ -56,16 +56,16 @@ while run:
 
 
 
-    elif(control == 2):
+    elif(control == "2"):
         print("cic")
 
-    elif(control == 3):
+    elif(control == "3"):
         print("cic")
 
-    elif(control == 4):
+    elif(control == "4"):
         paket.display()
 
-    elif(control == 5):
+    elif(control == "5"):
 
         plist = PacketList([p for p in paket])
         [p.display() for p in plist]
