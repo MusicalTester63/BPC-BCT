@@ -68,12 +68,12 @@ while run:
     elif(control == "3"):
 
         for x in templates:
-            print("meno: " + p.get_meno())
-            print("Odosielatel: " + p.get_od())
-            print("Príjemca: " + p.get_pr())
-            print("typ:", p.get_typ()[0])
-            print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
-            print("Zoznam segmentov:", p.get_segmentList())
+            print("meno: " + templates[x].get_meno())
+            print("Odosielatel: " + templates[x].get_od())
+            print("Príjemca: " + templates[x].get_pr())
+            print("typ:", templates[x].get_typ()[0])
+            print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
+            print("Zoznam segmentov:", templates[x].get_segmentList())
 
 
     elif(control == "4"):
