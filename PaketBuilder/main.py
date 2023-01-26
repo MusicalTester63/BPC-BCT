@@ -7,7 +7,7 @@ from time import sleep
 
 run = True
 dir = ''
-suffix = '.cap'
+suffix = '.pcap'
 templates = {}
 
 
@@ -18,9 +18,10 @@ while run:
     print("-------------------------------------")
     print("1. Vytvoriť paket")
     print("2. Uložiť paket ako predvolbu")
-    print("3. Vypísať predvolby")
-    print("4. Vypísať nastavený paket")
-    print("5. Exportovať paket do PCAP súboru")
+    print("3. Načítať paket z predvolby")
+    print("4. Vypísať predvolby")
+    print("5. Vypísať nastavený paket")
+    print("6. Exportovať paket do PCAP súboru")
     print("0. Exit")
     print("-------------------------------------")
 
@@ -55,37 +56,46 @@ while run:
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
-        input("Press enter to continue...")
+        input("\nPress enter to continue...")
 
 
     elif(control == "2"):
         templates[p.get_meno()] = p
         print("Paket bol úspešne uložný do predvolieb.")        
-        input("Press enter to continue...")
-
-        
+        input("\nPress enter to continue...")
 
     elif(control == "3"):
+        #input("Zadajte meno paketu: ")
+        p = templates[input("Zadajte meno paketu: ")]
+        print("Paket bol úspešne načítaný.")
+        input("\nPress enter to continue...")
 
-        for x in templates:
-            print("meno: " + templates[x].get_meno())
-            print("Odosielatel: " + templates[x].get_od())
-            print("Príjemca: " + templates[x].get_pr())
-            print("typ:", templates[x].get_typ()[0])
-            print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
-            print("Zoznam segmentov:", templates[x].get_segmentList())
-        input("Press enter to continue...")
 
     elif(control == "4"):
+
+        if(len(templates) == 0):
+            print("Momentálne nemáte uložené žiadne predvolby")
+            input("\nPress enter to continue...")
+        else:
+            for x in templates:
+                print("meno: " + templates[x].get_meno())
+                print("Odosielatel: " + templates[x].get_od())
+                print("Príjemca: " + templates[x].get_pr())
+                print("typ:", templates[x].get_typ()[0])
+                print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
+                print("Zoznam segmentov:", templates[x].get_segmentList())
+            input("\nPress enter to continue...")
+
+    elif(control == "5"):
         print("meno: " + p.get_meno())
         print("Odosielatel: " + p.get_od())
         print("Príjemca: " + p.get_pr())
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
-        input("Press enter to continue...")
+        input("\nPress enter to continue...")
 
-    elif(control == "5"):
+    elif(control == "6"):
 
         paket = IPv6(src=p.get_od(), dst=p.get_pr()) / IPv6ExtHdrRouting(type=p.get_typ(), segleft=p.get_segmentsLeft(),addresses=p.get_segmentList())
         plist = PacketList([p for p in paket])
@@ -93,7 +103,7 @@ while run:
         wrpcap(dir + filename + suffix, plist)
 
         print("Pakety boli úspešne vygenerované a uložené do pcap súboru ", filename + suffix)
-        input("Press enter to continue...")
+        input("\nPress enter to continue...")
 
     elif(control == "0"):
         run = False
