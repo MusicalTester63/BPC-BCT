@@ -11,6 +11,8 @@ run = True
 dir = ''
 suffix = '.cap'
 
+
+
 print("Vitajte v programe PaketBuilder v1, ktorý používa Scapy")
 while run:
 
@@ -26,6 +28,10 @@ while run:
     control = input("Volba: ")
     print(control)
 
+
+
+
+
     if(control == "1"):
 
         od = input("Zadajte adresu odosielateľa: ")
@@ -38,8 +44,9 @@ while run:
             segList.append(input("Zadajte adresu ďalšieho segmentu: "))
             iterator -= 1
 
-        meno = input("Zadajte meno paketu/paketom: ")
+        meno = input("Zadajte meno paketu: ")
 
+        #Typ je ukladaný ako array kvôli tvorbe viacerých paketov, konečná vyexportovaná hodnota bude rovná typ[0], čiže 4
         typ = []
         pktAmount = int(input("Kolko takýchto paketov si prajete vytvoriť?: "))
         while pktAmount > 0:
@@ -55,9 +62,6 @@ while run:
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
 
-        paket = IPv6(src=p.get_od(), dst=p.get_pr()) / IPv6ExtHdrRouting(type=p.get_typ(), segleft=p.get_segmentsLeft(), addresses=p.get_segmentList())
-
-
 
     elif(control == "2"):
         print("cic")
@@ -66,10 +70,16 @@ while run:
         print("cic")
 
     elif(control == "4"):
-        paket.display()
+        print("meno: " + p.get_meno())
+        print("Odosielatel: " + p.get_od())
+        print("Príjemca: " + p.get_pr())
+        print("typ:", p.get_typ()[0])
+        print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
+        print("Zoznam segmentov:", p.get_segmentList())
 
     elif(control == "5"):
 
+        paket = IPv6(src=p.get_od(), dst=p.get_pr()) / IPv6ExtHdrRouting(type=p.get_typ(), segleft=p.get_segmentsLeft(),addresses=p.get_segmentList())
         plist = PacketList([p for p in paket])
         filename = input("Zadajte meno súboru: ")
         wrpcap(dir + filename + suffix, plist)
