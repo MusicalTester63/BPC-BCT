@@ -14,12 +14,14 @@ suffix = '.cap'
 print("Vitajte v programe PaketBuilder v1, ktorý používa Scapy")
 while run:
 
+    print("-------------------------------------")
     print("1. Vytvoriť paket")
     print("2. Uložiť paket ako predvolbu")
     print("3. Vypísať predvolby")
     print("4. Vypísať nastavený paket")
     print("5. Exportovať paket do PCAP súboru")
     print("0. Exit")
+    print("-------------------------------------")
 
     control = input("Volba: ")
     print(control)
@@ -69,10 +71,7 @@ while run:
     elif(control == "5"):
 
         plist = PacketList([p for p in paket])
-        [p.display() for p in plist]
-
         filename = input("Zadajte meno súboru: ")
-
         wrpcap(dir + filename + suffix, plist)
 
         print("Pakety boli úspešne vygenerované a uložené do pcap súboru ", filename + suffix)
