@@ -28,7 +28,7 @@ while run:
 
     if(control == "1"):
 
-        od = input("Zadajte adresu odosielateľa: ")
+        od = input("\nZadajte adresu odosielateľa: ")
         sl = int(input("Zadajte meziľahlých uzlov: "))
         pr = input("Zadajte adaresu príjemcu: ")
 
@@ -49,19 +49,20 @@ while run:
 
         p = paket(meno, od, pr, typ, sl, segList)
 
-        print("meno: " + p.get_meno())
+        print("\nmeno: " + p.get_meno())
         print("Odosielatel: " + p.get_od())
         print("Príjemca: " + p.get_pr())
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
-        input()
+        input("Press enter to continue...")
 
 
     elif(control == "2"):
         templates[p.get_meno()] = p
-        print("Paket bol úspešne uložný do predvolieb.")
-        input()
+        print("Paket bol úspešne uložný do predvolieb.")        
+        input("Press enter to continue...")
+
         
 
     elif(control == "3"):
@@ -73,7 +74,7 @@ while run:
             print("typ:", templates[x].get_typ()[0])
             print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
             print("Zoznam segmentov:", templates[x].get_segmentList())
-        input()
+        input("Press enter to continue...")
 
     elif(control == "4"):
         print("meno: " + p.get_meno())
@@ -82,7 +83,7 @@ while run:
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
-        input()
+        input("Press enter to continue...")
 
     elif(control == "5"):
 
@@ -92,7 +93,7 @@ while run:
         wrpcap(dir + filename + suffix, plist)
 
         print("Pakety boli úspešne vygenerované a uložené do pcap súboru ", filename + suffix)
-        input()
+        input("Press enter to continue...")
 
     elif(control == "0"):
         run = False
