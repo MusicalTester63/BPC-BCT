@@ -24,7 +24,7 @@ while run:
     control = input("Volba: ")
     print(control)
 
-    if(control == 1):
+    if(control == "1"):
 
         od = input("Zadajte adresu odosielateľa: ")
         sl = int(input("Zadajte meziľahlých uzlov: "))
@@ -76,5 +76,5 @@ while run:
 
         print("Pakety boli úspešne vygenerované a uložené do pcap súboru ", filename + suffix)
 
-    elif(control == 0):
+    elif(control == "0"):
         run = False
