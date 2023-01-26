@@ -14,7 +14,7 @@ templates = {}
 print("Vitajte v programe PaketBuilder v1, ktorý používa Scapy")
 while run:
 
-    os.system('cls')
+    os.system('clear')
     print("-------------------------------------")
     print("1. Vytvoriť paket")
     print("2. Uložiť paket ako predvolbu")
@@ -60,12 +60,14 @@ while run:
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
-        print("\n")
         sleep(2)
 
 
     elif(control == "2"):
         templates[p.get_meno()] = p
+        print("Paket bol úspešne uložný do predvolieb.")
+        sleep(2)
+        
 
     elif(control == "3"):
 
@@ -76,8 +78,6 @@ while run:
             print("typ:", templates[x].get_typ()[0])
             print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
             print("Zoznam segmentov:", templates[x].get_segmentList())
-            print("\n")
-            print("\n")
         sleep(2)
 
     elif(control == "4"):
