@@ -1,10 +1,9 @@
 from scapy.all import *
-from scapy.layers.inet6 import IPv6, IPv6ExtHdrRouting
-from scapy.plist import PacketList
-from scapy.utils import wrpcap
-
+import os
 from paket import paket
 import pickle
+from time import sleep
+
 
 run = True
 dir = ''
@@ -15,6 +14,7 @@ templates = {}
 print("Vitajte v programe PaketBuilder v1, ktorý používa Scapy")
 while run:
 
+    os.system('cls')
     print("-------------------------------------")
     print("1. Vytvoriť paket")
     print("2. Uložiť paket ako predvolbu")
@@ -60,6 +60,8 @@ while run:
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
+        print("\n")
+        sleep(2)
 
 
     elif(control == "2"):
@@ -74,7 +76,9 @@ while run:
             print("typ:", templates[x].get_typ()[0])
             print("Počet zostávajucich segmentov:", templates[x].get_segmentsLeft())
             print("Zoznam segmentov:", templates[x].get_segmentList())
-
+            print("\n")
+            print("\n")
+        sleep(2)
 
     elif(control == "4"):
         print("meno: " + p.get_meno())
@@ -83,6 +87,7 @@ while run:
         print("typ:", p.get_typ()[0])
         print("Počet zostávajucich segmentov:", p.get_segmentsLeft())
         print("Zoznam segmentov:", p.get_segmentList())
+        sleep(2)
 
     elif(control == "5"):
 
@@ -92,6 +97,7 @@ while run:
         wrpcap(dir + filename + suffix, plist)
 
         print("Pakety boli úspešne vygenerované a uložené do pcap súboru ", filename + suffix)
+        sleep(2)
 
     elif(control == "0"):
         run = False
