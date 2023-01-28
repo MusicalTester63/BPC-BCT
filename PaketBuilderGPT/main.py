@@ -4,6 +4,20 @@ from packet import *
 import pickle
 import json
 from time import sleep
+import subprocess
+
+def install(package):
+    subprocess.call([sys.executable, "-m", "pip", "install", package])
+
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
+installed = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze']).decode().splitlines()
+installed_packages = [package.split('==')[0] for package in installed]
+
+for package in required:
+    if package.split('==')[0] not in installed_packages:
+        install(package)
 
 
 def export_dict_to_file(data, file_name):
