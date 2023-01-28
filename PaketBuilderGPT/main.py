@@ -109,10 +109,13 @@ def print_loaded_packet(packet):
 def export_packet(packet):
     # code to export packet to a pcap file
 
+    name = packet.get_name()
+    count = len(packet.get_type())
+
     dir = ''
     suffix = '.pcap'
 
-    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_typype(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList())
+    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList())
     plist = PacketList([p for p in paket])
     filename = input("Zadajte meno súboru: ")
     wrpcap(dir + filename + suffix, plist)
