@@ -2,6 +2,7 @@ import os
 from packet import *
 import pickle
 import json
+from time import sleep
 
 
 def export_dict_to_file(data, file_name):
@@ -107,10 +108,15 @@ def print_loaded_packet(packet):
 def export_packet(packet):
     # code to export packet to a pcap file
     name = packet.get_name()
-    print(f"Packet {name} exported to PCAP file.")
+    count = packet.get_segmentsLeft()
+
+    print(f"{count} {name} packets exported to PCAP file.")
 
 
 p = None
+os.system('cls' if os.name == 'nt' else 'clear')
+
+print("Loading templates...")
 
 templates = import_dict_from_file('templates.pickle')
 if templates:
@@ -125,8 +131,11 @@ else:
         templates = {}
         print("Templates failed to load")
 
+sleep(2)
+
 while True:
-    os.system("cls")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("----------------------------------------------------------------")
     print("Menu:")
     print("1. Create a packet")
     print("2. Print templates")
@@ -135,6 +144,7 @@ while True:
     print("5. Print loaded packet")
     print("6. Export packet to pcap file")
     print("0. Exit")
+    print("----------------------------------------------------------------")
 
     choice = input("Enter your choice: ")
 
@@ -157,4 +167,4 @@ while True:
     else:
         print("Invalid choice.")
 
-    input("Press enter to continue...")
+    input("\nPress enter to continue...")
