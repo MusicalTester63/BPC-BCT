@@ -1,10 +1,7 @@
 import os
-from scapy.all import *
-from packet import *
-import pickle
-import json
-from time import sleep
+import sys
 import subprocess
+from packet import *
 
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
@@ -18,6 +15,17 @@ installed_packages = [package.split('==')[0] for package in installed]
 for package in required:
     if package.split('==')[0] not in installed_packages:
         install(package)
+
+
+
+from scapy.all import *
+
+import pickle
+import json
+from time import sleep
+
+
+
 
 
 def export_dict_to_file(data, file_name):
