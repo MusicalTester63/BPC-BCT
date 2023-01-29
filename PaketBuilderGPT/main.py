@@ -2,6 +2,9 @@ import os
 import sys
 import subprocess
 from packet import *
+import pickle
+import json
+from time import sleep
 
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
@@ -19,11 +22,6 @@ for package in required:
 
 
 from scapy.all import *
-
-import pickle
-import json
-from time import sleep
-
 
 
 
@@ -146,7 +144,7 @@ def export_packet(packet):
 
 
 p = None
-os.system('cls' if os.name == 'nt' else 'clear')
+#os.system('cls' if os.name == 'nt' else 'clear')
 
 print("Loading templates...")
 
@@ -166,7 +164,7 @@ else:
 sleep(2)
 
 while True:
-    os.system('cls' if os.name == 'nt' else 'clear')
+    #os.system('cls' if os.name == 'nt' else 'clear')
     print("----------------------------------------------------------------")
     print("Menu:")
     print("1. Create a packet")
