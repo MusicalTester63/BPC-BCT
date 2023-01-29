@@ -144,7 +144,7 @@ def export_packet(packet):
 
 
 p = None
-#os.system('cls' if os.name == 'nt' else 'clear')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 print("Loading templates...")
 
@@ -164,7 +164,7 @@ else:
 sleep(2)
 
 while True:
-    #os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("----------------------------------------------------------------")
     print("Menu:")
     print("1. Create a packet")
