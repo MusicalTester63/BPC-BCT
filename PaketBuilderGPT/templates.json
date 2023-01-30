@@ -1,1 +1,79 @@
-{"Test1": 
+{
+    "_Packet__name": "Test1",
+    "_Packet__receiver": "::3",
+    "_Packet__segmentList": [
+        "::2"
+    ],
+    "_Packet__segmentsLeft": 1,
+    "_Packet__sender": "::1",
+    "_Packet__type": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+    ]
+}{
+    "_Packet__name": "Test2",
+    "_Packet__receiver": "::6",
+    "_Packet__segmentList": [
+        "::3",
+        "::4",
+        "::5"
+    ],
+    "_Packet__segmentsLeft": 3,
+    "_Packet__sender": "::2",
+    "_Packet__type": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+    ]
+}{
+    "_Packet__name": "Test3",
+    "_Packet__receiver": "::8",
+    "_Packet__segmentList": [
+        "::2",
+        "::3",
+        "::4",
+        "::5",
+        "::6",
+        "::7",
+        "::8"
+    ],
+    "_Packet__segmentsLeft": 7,
+    "_Packet__sender": "::1",
+    "_Packet__type": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+    ]
+}

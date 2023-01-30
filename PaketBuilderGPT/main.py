@@ -6,8 +6,28 @@ import pickle
 import json
 from time import sleep
 
+
+try:
+    import pip
+except ImportError:
+    print("pip not found, installing...")
+    try:
+        import ensurepip
+        ensurepip.bootstrap()
+    except:
+        print("Could not install pip.")
+        sys.exit(1)
+
+print("pip is installed.")
+
+
+
+
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
+
+
+print("Installing packages...")
 
 with open('requirements.txt') as f:
     required = f.read().splitlines()
@@ -20,10 +40,12 @@ for package in required:
         install(package)
 
 
-
-from scapy.all import *
-
-
+try:
+    from scapy.all import *
+except ImportError:
+    print("scapy not found")
+    sys.exit(1)
+    
 
 
 def export_dict_to_file(data, file_name):
@@ -32,9 +54,19 @@ def export_dict_to_file(data, file_name):
     print(f'{file_name} has been created.')
 
 def export_dict_to_json(data, file_name):
-    with open(file_name, "w") as file:
-        json.dump(data, file)
-    print(f'{file_name} has been created.')
+
+    json_string = ""
+
+    for name, p in data.items():
+            json_string += p.toJSON()
+
+    with open(file_name, 'w') as outfile:
+    # write the json string to the file
+        outfile.write(json_string)
+
+    #with open(file_name, "w") as file:
+    #    json.dump(data, file)
+    #print(f'{file_name} has been created.')
 
 def import_dict_from_file(file_name):
     if os.path.exists(file_name):
@@ -173,6 +205,7 @@ while True:
     print("4. Save packet as a template")
     print("5. Print loaded packet")
     print("6. Export packet to pcap file")
+    print("7. JSON export")
     print("0. Exit")
     print("----------------------------------------------------------------")
 
@@ -190,9 +223,11 @@ while True:
         print_loaded_packet(p)
     elif choice == "6":
         export_packet(p)
+    elif choice == "7":
+        export_dict_to_json(templates, 'templates.json')        
     elif choice == "0":
         export_dict_to_file(templates, 'templates.pickle')
-        # export_dict_to_json(templates, 'templates.json')
+        #export_dict_to_json(templates, 'templates.json')
         break
     else:
         print("Invalid choice.")
