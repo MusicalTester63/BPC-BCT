@@ -169,7 +169,7 @@ def export_packet(packet):
 
     paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList())
     plist = PacketList([p for p in paket])
-    filename = input("Zadajte meno súboru: ")
+    filename = input("Input the file name: ")
     wrpcap(dir + filename + suffix, plist)
 
     print(f"{count} {name} packets exported to PCAP file.")
