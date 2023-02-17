@@ -7,22 +7,6 @@ import json
 from time import sleep
 
 
-try:
-    import pip
-except ImportError:
-    print("pip not found, installing...")
-    try:
-        import ensurepip
-        ensurepip.bootstrap()
-    except:
-        print("Could not install pip.")
-        sys.exit(1)
-
-print("pip is installed.")
-
-
-
-
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
 
@@ -45,7 +29,6 @@ try:
 except ImportError:
     print("scapy not found")
     sys.exit(1)
-    
 
 
 def export_dict_to_file(data, file_name):
@@ -53,33 +36,10 @@ def export_dict_to_file(data, file_name):
         pickle.dump(data, file)
     print(f'{file_name} has been created.')
 
-def export_dict_to_json(data, file_name):
-
-    json_string = ""
-
-    for name, p in data.items():
-            json_string += p.toJSON()
-
-    with open(file_name, 'w') as outfile:
-    # write the json string to the file
-        outfile.write(json_string)
-
-    #with open(file_name, "w") as file:
-    #    json.dump(data, file)
-    #print(f'{file_name} has been created.')
-
 def import_dict_from_file(file_name):
     if os.path.exists(file_name):
         with open(file_name, "rb") as file:
             data = pickle.load(file)
-        return data
-    else:
-        print(f'{file_name} does not exist')
-
-def import_dict_from_json(file_name):
-    if os.path.exists(file_name):
-        with open(file_name, "r") as file:
-            data = json.load(file)
         return data
     else:
         print(f'{file_name} does not exist')
@@ -93,7 +53,7 @@ def create_packet():
     packet_segmentList = []
     iterator = packet_segmentsLeft
     while iterator > 0:
-        packet_segmentList.append(input("Zadajte adresu ďalšieho segmentu: "))
+        packet_segmentList.append(input("Input the address of the next segment: "))
         iterator -= 1
 
     packet_type = []
@@ -102,7 +62,7 @@ def create_packet():
         packet_type.append(4)
         pktAmount -= 1
 
-    packet = Packet(packet_name, packet_sender, packet_receiver, packet_type, packet_segmentsLeft, packet_segmentList)
+    packet = pkt(packet_name, packet_sender, packet_receiver, packet_type, packet_segmentsLeft, packet_segmentList)
 
     print("\nName: " + packet.get_name())
     print("Sender: " + packet.get_sender())
@@ -167,7 +127,8 @@ def export_packet(packet):
     dir = ''
     suffix = '.pcap'
 
-    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList())
+    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=b'xIDx')
+
     plist = PacketList([p for p in paket])
     filename = input("Input the file name: ")
     wrpcap(dir + filename + suffix, plist)
@@ -184,8 +145,7 @@ templates = import_dict_from_file('templates.pickle')
 if templates:
     print("Templates loaded..")
 else:
-    templates = import_dict_from_json('templates.json')
-
+    
     if templates:
         print("templates loaded..")
 
@@ -223,11 +183,8 @@ while True:
         print_loaded_packet(p)
     elif choice == "6":
         export_packet(p)
-    elif choice == "7":
-        export_dict_to_json(templates, 'templates.json')        
     elif choice == "0":
         export_dict_to_file(templates, 'templates.pickle')
-        #export_dict_to_json(templates, 'templates.json')
         break
     else:
         print("Invalid choice.")

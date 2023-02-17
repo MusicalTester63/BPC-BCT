@@ -1,7 +1,7 @@
 import pickle
 import json
 
-class Packet:
+class pkt:
     def __init__(self, name, sender, receiver, type, segmentsLeft, segmentList):
         self.__name = name
         self.__sender = sender
@@ -45,7 +45,3 @@ class Packet:
 
     def set_segmentList(self, segmentList):
         self.__segmentList = segmentList
-
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)
