@@ -6,6 +6,7 @@ import pickle
 import random
 from time import sleep
 
+
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
 
@@ -22,7 +23,12 @@ for package in required:
     if package.split('==')[0] not in installed_packages:
         install(package)
 
-from scapy.all import *
+
+try:
+    from scapy.all import *
+except ImportError:
+    print("Restart the script please :)")
+    sys.exit(1)
 
 
 def export_dict_to_file(data, file_name):
