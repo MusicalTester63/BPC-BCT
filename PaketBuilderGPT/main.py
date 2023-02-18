@@ -5,7 +5,7 @@ from packet import *
 import pickle
 import random
 from time import sleep
-
+from scapy.all import *
 
 def install(package):
     subprocess.call([sys.executable, "-m", "pip", "install", package])
@@ -22,13 +22,6 @@ installed_packages = [package.split('==')[0] for package in installed]
 for package in required:
     if package.split('==')[0] not in installed_packages:
         install(package)
-
-
-try:
-    from scapy.all import *
-except ImportError:
-    print("scapy not found")
-    sys.exit(1)
 
 
 def export_dict_to_file(data, file_name):
