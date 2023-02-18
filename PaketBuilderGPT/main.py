@@ -169,7 +169,6 @@ while True:
     print("4. Save packet as a template")
     print("5. Print loaded packet")
     print("6. Export packet to pcap file")
-    print("7. JSON export")
     print("0. Exit")
     print("----------------------------------------------------------------")
 
