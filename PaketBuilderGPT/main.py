@@ -3,7 +3,7 @@ import sys
 import subprocess
 from packet import *
 import pickle
-import json
+import random
 from time import sleep
 
 
@@ -127,7 +127,11 @@ def export_packet(packet):
     dir = ''
     suffix = '.pcap'
 
-    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=b'xIDx')
+
+    rand_num = random.randint(0, 63)
+    id = bin(rand_num)[2:].zfill(6)
+
+    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=id)
 
     plist = PacketList([p for p in paket])
     filename = input("Input the file name: ")
