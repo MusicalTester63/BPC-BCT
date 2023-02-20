@@ -62,7 +62,9 @@ def create_packet():
         packet_type.append(4)
         pktAmount -= 1
 
-    packet = pkt(packet_name, packet_sender, packet_receiver, packet_type, packet_segmentsLeft, packet_segmentList)
+    packet_identifier = input("Enter packet identifier: ")
+
+    packet = pkt(packet_name, packet_sender, packet_receiver, packet_type, packet_segmentsLeft, packet_segmentList, packet_identifier)
 
     print("\nName: " + packet.get_name())
     print("Sender: " + packet.get_sender())
@@ -131,7 +133,7 @@ def export_packet(packet):
     rand_num = random.randint(0, 63)
     id = bin(rand_num)[2:].zfill(6)
 
-    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=id)
+    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=packet.get_identifier())
 
     plist = PacketList([p for p in paket])
     filename = input("Input the file name: ")
