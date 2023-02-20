@@ -2,13 +2,14 @@ import pickle
 import json
 
 class pkt:
-    def __init__(self, name, sender, receiver, type, segmentsLeft, segmentList):
+    def __init__(self, name, sender, receiver, type, segmentsLeft, segmentList, identifier):
         self.__name = name
         self.__sender = sender
         self.__receiver = receiver
         self.__type = type
         self.__segmentsLeft = segmentsLeft
         self.__segmentList = segmentList
+        self.__identifier = identifier
 
     def get_name(self):
         return self.__name
@@ -45,3 +46,9 @@ class pkt:
 
     def set_segmentList(self, segmentList):
         self.__segmentList = segmentList
+    
+    def get_identifier(self):
+        return self.__identifier
+
+    def set_segmentList(self, identifier):
+        self.__identifier = identifier
