@@ -46,8 +46,6 @@ def import_dict_from_file(file_name):
 
 
 
-
-
 # code to create a packet
 def create_packet():
     packet_name = input("Enter packet name: ")
@@ -79,7 +77,6 @@ def create_packet():
 
 
 
-
 # code to print templates
 def print_templates():
     if not templates:
@@ -94,7 +91,6 @@ def print_templates():
             print(f"Segments left: {packet.get_segmentsLeft()}")
             print(f"Segment list: {packet.get_segmentList()}")
             print("\n")
-
 
 
 
@@ -160,7 +156,6 @@ def export_packet(packet):
     wrpcap(dir + filename + suffix, plist)
 
     print(f"{count} {name} packets exported to PCAP file.")
-
 
 
 
