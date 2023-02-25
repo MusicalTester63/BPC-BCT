@@ -1,17 +1,17 @@
 import os
-import glob
-import tkinter as tk
-from tkinter import messagebox
+import platform
+from tkinter import messagebox  # for Windows message box
 
-# Find all .pcap files in the current directory
-pcap_files = glob.glob("*.pcap")
+# Get operating system
+os_name = platform.system()
 
-# Delete all .pcap files and record their names
-deleted_files = []
-for file in pcap_files:
-    os.remove(file)
-    deleted_files.append(file)
+# Delete all .pcap files in current directory
+for file in os.listdir("."):
+    if file.endswith(".pcap"):
+        os.remove(file)
 
-# Show a message box with the message "PCAP files deleted!"
-if deleted_files:
-    messagebox.showinfo("Files Deleted", "PCAP files deleted!")
+# Show message box or output to console depending on OS
+if os_name == "Windows":
+    messagebox.showinfo("PCAP Files Deleted", "All PCAP files have been deleted.")
+else:
+    print("All PCAP files have been deleted.")
