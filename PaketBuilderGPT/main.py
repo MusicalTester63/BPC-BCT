@@ -44,6 +44,11 @@ def import_dict_from_file(file_name):
     else:
         print(f'{file_name} does not exist')
 
+
+
+
+
+# code to create a packet
 def create_packet():
     packet_name = input("Enter packet name: ")
     packet_sender = input("Enter packet sender: ")
@@ -56,12 +61,8 @@ def create_packet():
         packet_segmentList.append(input("Input the address of the next segment: "))
         iterator -= 1
 
-    packet_type = []
-    pktAmount = int(input("How many of these packets would you like to create?: "))
-    while pktAmount > 0:
-        packet_type.append(4)
-        pktAmount -= 1
-
+    packet_type = 4
+    
     packet_identifier = input("Enter packet identifier: ")
 
     packet = pkt(packet_name, packet_sender, packet_receiver, packet_type, packet_segmentsLeft, packet_segmentList, packet_identifier)
@@ -69,14 +70,17 @@ def create_packet():
     print("\nName: " + packet.get_name())
     print("Sender: " + packet.get_sender())
     print("Receiver: " + packet.get_receiver())
-    print("Type:", packet.get_type()[0])
-    print("Packet amount:", len(packet.get_type()))
+    print("Type:", packet.get_type())
     print("Segments left:", packet.get_segmentsLeft())
     print("Segment list:", packet.get_segmentList())
 
     print("Packet created!")
     return packet
 
+
+
+
+# code to print templates
 def print_templates():
     if not templates:
         print("No templates found.")
@@ -86,60 +90,113 @@ def print_templates():
             print(f"Template name: {name}")
             print(f"Sender: {packet.get_sender()}")
             print(f"Receiver: {packet.get_receiver()}")
+            print("Type:", packet.get_type())
             print(f"Segments left: {packet.get_segmentsLeft()}")
             print(f"Segment list: {packet.get_segmentList()}")
             print("\n")
 
+
+
+
+# code to load a packet from a template
 def load_packet():
-    # code to load a packet from a template
+    
     name = input("Enter template name: ")
     if name in templates:
         packet = templates[name]
+        print_loaded_packet(packet)
         print("Packet loaded")
         return packet
     else:
         print("Template not found.")
         return None
 
+
+
+
+# code to save a packet as a template
 def save_packet(packet):
-    # code to save a packet as a template
+    
     name = packet.get_name()
     templates[name] = packet
     print(f"Packet saved as template: {name}")
 
+
+
+
+# code to print the loaded packet
 def print_loaded_packet(packet):
-    # code to print the loaded packet
+    
     if packet:
         print("\nName: " + packet.get_name())
         print("Sender: " + packet.get_sender())
         print("Receiver: " + packet.get_receiver())
-        print("Type:", packet.get_type()[0])
-        print("Packet amount:", len(packet.get_type()))
+        print("Type:", packet.get_type())
         print("Segments left:", packet.get_segmentsLeft())
         print("Segment list:", packet.get_segmentList())
     else:
         print("No packet is loaded")
 
+
+# code to export packet to a pcap file
 def export_packet(packet):
-    # code to export packet to a pcap file
-
+    
     name = packet.get_name()
-    count = len(packet.get_type())
-
     dir = ''
     suffix = '.pcap'
+   
+    pktTypeArray = []
+    pktAmount = int(input("How many of these packets would you like to create?: "))
+    while pktAmount > 0:
+        pktTypeArray.append(packet.get_type())
+        pktAmount -= 1
 
+    count = len(pktTypeArray)
 
-    rand_num = random.randint(0, 63)
-    id = bin(rand_num)[2:].zfill(6)
-
-    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=packet.get_type(), segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=packet.get_identifier())
+    paket = IPv6(src=packet.get_sender(), dst=packet.get_receiver()) / IPv6ExtHdrRouting(type=pktTypeArray, segleft=packet.get_segmentsLeft(),addresses=packet.get_segmentList()) / IPv6ExtHdrSegmentRoutingTLVPadN(type=129,len=5,padding=packet.get_identifier())
 
     plist = PacketList([p for p in paket])
     filename = input("Input the file name: ")
     wrpcap(dir + filename + suffix, plist)
 
     print(f"{count} {name} packets exported to PCAP file.")
+
+
+
+
+
+# Define function to join pcap files
+def join_pcap_files():
+    # Prompt user for input files
+    input_files = []
+    while True:
+        file = input("Enter file name to join (or 'done' to finish): ")
+        if file.lower() == "done":
+            break
+        # Add ".pcap" to file name if not already present
+        if not file.endswith(".pcap"):
+            file += ".pcap"
+        # Check if file exists in current directory
+        if not os.path.isfile(file):
+            print(f"{file} does not exist in the current directory. Please try again.")
+            continue        
+        input_files.append(file)
+    
+    # Prompt user for output file
+    output_file = input("Enter output file name: ")
+    # Add ".pcap" to output file name if not already present
+    if not output_file.endswith(".pcap"):
+        output_file += ".pcap"
+
+    # Read packets from all input files
+    packets = []
+    for file in input_files:
+        packets += rdpcap(file)
+
+    # Write combined packets to output file
+    wrpcap(output_file, packets)
+
+
 
 
 p = None
@@ -151,13 +208,8 @@ templates = import_dict_from_file('templates.pickle')
 if templates:
     print("Templates loaded..")
 else:
-    
-    if templates:
-        print("templates loaded..")
-
-    else:
-        templates = {}
-        print("Templates failed to load")
+    templates = {}
+    print("Templates failed to load")
 
 sleep(2)
 
@@ -166,11 +218,13 @@ while True:
     print("----------------------------------------------------------------")
     print("Menu:")
     print("1. Create a packet")
-    print("2. Print templates")
-    print("3. Load packet from a template")
-    print("4. Save packet as a template")
-    print("5. Print loaded packet")
-    print("6. Export packet to pcap file")
+    print("2. Modify loaded packet")
+    print("3. Print templates")
+    print("4. Load packet from a template")
+    print("5. Save packet as a template")
+    print("6. Print loaded packet")
+    print("7. Export packet to pcap file")
+    print("8. Join pcap files")
     print("0. Exit")
     print("----------------------------------------------------------------")
 
@@ -179,15 +233,20 @@ while True:
     if choice == "1":
         p = create_packet()
     elif choice == "2":
-        print_templates()
+        #modify_packet()
+        print("To be implemented")
     elif choice == "3":
-        p = load_packet()
+        print_templates()
     elif choice == "4":
-        save_packet(p)
+        p = load_packet()
     elif choice == "5":
-        print_loaded_packet(p)
+        save_packet(p)
     elif choice == "6":
+        print_loaded_packet(p)
+    elif choice == "7":
         export_packet(p)
+    elif choice == "8":
+        join_pcap_files()
     elif choice == "0":
         export_dict_to_file(templates, 'templates.pickle')
         break
