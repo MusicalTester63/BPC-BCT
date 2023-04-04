@@ -1,2 +1,5 @@
 *.pcap
 *.cap
+*.pickle
+test.py
+clean.py
