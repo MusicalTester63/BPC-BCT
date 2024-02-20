@@ -30,7 +30,7 @@ def check_packages():
             print(f"{package} is not installed, installing now...")
             install(package)
     print("All packages have been installed")
-    #sleep(1)
+    sleep(1)
 
 #Export templates to a file
 def export_dict_to_file(data, file_name):
@@ -82,7 +82,7 @@ def p_creator(templates):
         elif choice == "4":
             p = load_packet(templates)
         elif choice == "5":
-            save_packet(p)
+            templates = save_packet(p, templates)
         elif choice == "6":
             clear_console()
             print_packet(p)
@@ -195,11 +195,12 @@ def load_packet(templates):
             break
 
 # code to save a packet as a template
-def save_packet(packet):
+def save_packet(packet, templates):
     if packet:
         name = packet.get_name()
         templates[name] = packet
         print(f"Packet saved as template: {name}")
+        return templates
     else:
             print("No packet is loaded")
 
@@ -373,6 +374,7 @@ def add_id():
         chosen_id = slice_ids[choice-1]
 
         padN = IPv6ExtHdrSegmentRoutingTLVPadN(type=4,len=5,padding=chosen_id)
+        destOptn = IPv6ExtHdrDestOpt(len=5,options=chosen_id)
 
         # Loop over each packet in the pcap file
         for packet in packets:
@@ -425,14 +427,16 @@ def generate_random_ipv6_pcap(packet_count, output_filename):
 
         padN = IPv6ExtHdrSegmentRoutingTLVPadN(type=4,len=5,padding=random_slice_id)
 
+        destOptn = IPv6ExtHdrDestOpt(options=[])
+
         srv6 = IPv6ExtHdrSegmentRouting(type=4, segleft=None, addresses=srv6_seg_list, tlv_objects=[padN])
 
         # Combine the Ethernet, IPv6, SRv6, and payload layers into a single packet
-        packet = eth / ipv6 / srv6 / TCP() / data
-        
+        packet = eth / ipv6 / destOptn / TCP() / data
         # Add the packet to the list of packets
         packets.append(packet)
-    try:
+        
+    try:        
         # Write the packets to a pcap file
         wrpcap(output_filename, packets)
     except TypeError as e:
@@ -520,14 +524,14 @@ except ImportError:
 def PacketPlayground():
     clear_console()
     print("Loading templates...")
-    #sleep(2)
+    sleep(2)
     templates = import_dict_from_file('templates.pickle')
     if templates:
         print("Templates loaded..")
     else:
         templates = {}
         print("Templates failed to load")
-    #sleep(1)
+    sleep(1)
 
 
     while True:
